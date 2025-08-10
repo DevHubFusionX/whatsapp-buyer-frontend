@@ -4,7 +4,7 @@ const API_BASE_URL = 'https://whatsapp-vendor.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: false
+  withCredentials: true
 });
 
 export const vendorsAPI = {

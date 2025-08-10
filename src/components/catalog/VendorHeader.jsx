@@ -4,7 +4,7 @@ import Card from '../ui/Card'
 
 const VendorHeader = ({ vendor, onMessage, productCount }) => {
   const handleShare = () => {
-    const catalogUrl = `http://localhost:5174/catalog/${vendor.catalogId}`
+    const catalogUrl = `https://whatsapp-buyer-frontend.vercel.app/catalog/${vendor.catalogId}`
     const message = `🛍️ Check out ${vendor.businessName}'s catalog with ${productCount} products!\n\n${catalogUrl}`
     
     if (navigator.share) {
