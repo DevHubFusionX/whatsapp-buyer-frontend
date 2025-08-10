@@ -85,35 +85,35 @@ const CatalogHome = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-gray-50 pb-16 sm:pb-20">
       <div className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="p-4">
-          <h1 className="text-xl font-bold text-gray-800 mb-3">{vendor?.businessName || 'Loading...'}</h1>
-          <p className="text-sm text-gray-500 mb-2">Catalog ID: {vendorId}</p>
-          <p className="text-sm text-gray-500 mb-2">Products: {products.length} | Vendor: {vendor ? 'Found' : 'Not Found'}</p>
-          {error && <p className="text-sm text-red-500 mb-2">Error: {error}</p>}
+        <div className="p-3 sm:p-4">
+          <h1 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3 truncate">{vendor?.businessName || 'Loading...'}</h1>
+          <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">Catalog ID: {vendorId}</p>
+          <p className="text-xs sm:text-sm text-gray-500 mb-2">Products: {products.length} | Vendor: {vendor ? 'Found' : 'Not Found'}</p>
+          {error && <p className="text-xs sm:text-sm text-red-500 mb-2">Error: {error}</p>}
           <SearchBar value={searchQuery} onChange={setSearchQuery} />
         </div>
         
-        <div className="px-4 pb-3 flex justify-end">
-          <div className="flex bg-gray-100 rounded-lg p-1">
+        <div className="px-3 sm:px-4 pb-2 sm:pb-3 flex justify-end">
+          <div className="flex bg-gray-100 rounded-lg p-0.5 sm:p-1">
             <button
               onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'text-gray-600'}`}
+              className={`p-1.5 sm:p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'text-gray-600'}`}
             >
-              <Grid className="w-4 h-4" />
+              <Grid className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
             <button
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow-sm' : 'text-gray-600'}`}
+              className={`p-1.5 sm:p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow-sm' : 'text-gray-600'}`}
             >
-              <List className="w-4 h-4" />
+              <List className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             </button>
           </div>
         </div>
       </div>
 
-      <div className="p-4 space-y-6">
+      <div className="p-3 sm:p-4 space-y-4 sm:space-y-6">
         <VendorHeader 
           vendor={vendor} 
           productCount={products.length}
@@ -125,9 +125,9 @@ const CatalogHome = () => {
         />
         
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-16">
-            <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500">No products found</p>
+          <div className="text-center py-12 sm:py-16">
+            <Package className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
+            <p className="text-sm sm:text-base text-gray-500">No products found</p>
           </div>
         ) : viewMode === 'grid' ? (
           <ProductGrid products={filteredProducts} vendor={vendor} showMessageButtons={true} />

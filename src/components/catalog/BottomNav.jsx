@@ -17,7 +17,7 @@ const BottomNav = ({ vendor }) => {
   ]
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 z-20">
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 sm:px-4 py-2 z-20 safe-area-inset-bottom">
       <div className="flex justify-around max-w-md mx-auto">
         {navItems.map((item, index) => {
           const Component = item.path ? Link : 'button'
@@ -26,12 +26,12 @@ const BottomNav = ({ vendor }) => {
               key={index}
               to={item.path}
               onClick={item.onClick}
-              className={`flex flex-col items-center py-2 px-3 rounded-lg transition-colors ${
+              className={`flex flex-col items-center py-1.5 sm:py-2 px-2 sm:px-3 rounded-lg transition-colors min-w-0 flex-1 ${
                 item.active ? 'text-green-600 bg-green-50' : 'text-gray-600 hover:text-green-600 hover:bg-green-50'
               }`}
             >
-              <item.icon className="w-5 h-5 mb-1" />
-              <span className="text-xs font-medium">{item.label}</span>
+              <item.icon className="w-4 h-4 sm:w-5 sm:h-5 mb-0.5 sm:mb-1 flex-shrink-0" />
+              <span className="text-xs font-medium truncate">{item.label}</span>
             </Component>
           )
         })}

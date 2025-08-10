@@ -68,53 +68,53 @@ const ProductDetail = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="p-4 flex items-center space-x-3">
+        <div className="p-3 sm:p-4 flex items-center space-x-2 sm:space-x-3">
           <Link
             to={`/catalog/${vendor.catalogId}`}
-            className="p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
+            className="p-1.5 sm:p-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </Link>
-          <h1 className="text-lg font-semibold text-gray-800">Product Details</h1>
+          <h1 className="text-base sm:text-lg font-semibold text-gray-800">Product Details</h1>
         </div>
       </div>
 
-      <div className="p-4 space-y-6 pb-24">
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="p-3 sm:p-4 space-y-4 sm:space-y-6 pb-20 sm:pb-24">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div className="aspect-square bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
             {product.image ? (
               <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
             ) : (
-              <Package className="w-20 h-20 text-gray-300" />
+              <Package className="w-16 h-16 sm:w-20 sm:h-20 text-gray-300" />
             )}
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">{product.name}</h1>
-          <p className="text-3xl font-bold text-green-600 mb-4">₦{product.price.toLocaleString()}</p>
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">{product.name}</h1>
+          <p className="text-2xl sm:text-3xl font-bold text-green-600 mb-4">₦{product.price.toLocaleString()}</p>
           
           {product.description && (
             <div>
-              <h3 className="font-semibold text-gray-800 mb-2">Description</h3>
-              <p className="text-gray-600 leading-relaxed">{product.description}</p>
+              <h3 className="font-semibold text-gray-800 mb-2 text-sm sm:text-base">Description</h3>
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base">{product.description}</p>
             </div>
           )}
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
-              <Store className="w-6 h-6 text-green-600" />
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
+              <Store className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
             </div>
-            <div>
-              <h3 className="font-semibold text-gray-800">{vendor.businessName}</h3>
-              <p className="text-sm text-gray-600">by {vendor.name}</p>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-semibold text-gray-800 text-sm sm:text-base truncate">{vendor.businessName}</h3>
+              <p className="text-xs sm:text-sm text-gray-600 truncate">by {vendor.name}</p>
             </div>
           </div>
           <Link
             to={`/vendor/${vendor.catalogId}`}
-            className="text-green-600 hover:text-green-700 font-medium text-sm"
+            className="text-green-600 hover:text-green-700 font-medium text-xs sm:text-sm"
           >
             View Vendor Profile →
           </Link>

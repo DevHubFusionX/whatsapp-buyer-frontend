@@ -1,1 +1,179 @@
 /* Additional custom styles for buyer app */
+
+/* Responsive container utilities */
+.container-responsive {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-responsive {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-responsive {
+    padding: 0 2rem;
+  }
+}
+
+/* Responsive text utilities */
+.text-responsive-xs {
+  font-size: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .text-responsive-xs {
+    font-size: 0.875rem;
+  }
+}
+
+.text-responsive-sm {
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .text-responsive-sm {
+    font-size: 1rem;
+  }
+}
+
+.text-responsive-base {
+  font-size: 1rem;
+}
+
+@media (min-width: 640px) {
+  .text-responsive-base {
+    font-size: 1.125rem;
+  }
+}
+
+/* Responsive spacing utilities */
+.space-responsive-x > * + * {
+  margin-left: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .space-responsive-x > * + * {
+    margin-left: 0.75rem;
+  }
+}
+
+.space-responsive-y > * + * {
+  margin-top: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .space-responsive-y > * + * {
+    margin-top: 1rem;
+  }
+}
+
+/* Responsive grid utilities */
+.grid-responsive-products {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .grid-responsive-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-responsive-products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-responsive-products {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid-responsive-products {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
+/* Responsive button utilities */
+.btn-responsive {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 640px) {
+  .btn-responsive {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* Responsive card utilities */
+.card-responsive {
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .card-responsive {
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile-first responsive utilities */
+.mobile-first-padding {
+  padding: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .mobile-first-padding {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mobile-first-padding {
+    padding: 1.5rem;
+  }
+}
+
+/* Touch-friendly interactive elements */
+@media (max-width: 640px) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Responsive image utilities */
+.img-responsive {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Responsive aspect ratios */
+.aspect-responsive-square {
+  aspect-ratio: 1 / 1;
+}
+
+.aspect-responsive-video {
+  aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 640px) {
+  .aspect-responsive-video {
+    aspect-ratio: 4 / 3;
+  }
+}

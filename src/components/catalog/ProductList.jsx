@@ -15,36 +15,37 @@ const ProductList = ({ products, vendor, showMessageButtons = false }) => {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2 sm:space-y-3">
       {products.map((product) => (
-        <div key={product._id} className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200">
+        <div key={product._id} className="bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200">
           <Link
             to={`/product/${product._id}?vendor=${product.vendor}`}
-            className="p-4 flex items-center space-x-4 block"
+            className="p-3 sm:p-4 flex items-center space-x-3 sm:space-x-4 block"
           >
-            <div className="w-16 h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl flex items-center justify-center flex-shrink-0">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
               {product.image ? (
-                <img src={product.image} alt={product.name} className="w-full h-full object-cover rounded-xl" />
+                <img src={product.image} alt={product.name} className="w-full h-full object-cover rounded-lg sm:rounded-xl" />
               ) : (
-                <Package className="w-6 h-6 text-gray-300" />
+                <Package className="w-5 h-5 sm:w-6 sm:h-6 text-gray-300" />
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-gray-800 mb-1 truncate">{product.name}</h3>
-              <p className="text-xl font-bold text-green-600">₦{product.price.toLocaleString()}</p>
+              <h3 className="font-medium text-gray-800 mb-1 truncate text-sm sm:text-base">{product.name}</h3>
+              <p className="text-lg sm:text-xl font-bold text-green-600">₦{product.price.toLocaleString()}</p>
             </div>
           </Link>
           
           {showMessageButtons && (
-            <div className="px-4 pb-4">
+            <div className="px-3 sm:px-4 pb-3 sm:pb-4">
               <Button
                 onClick={(e) => handleMessageVendor(e, product)}
                 variant="outline"
                 size="sm"
                 className="w-full"
               >
-                <MessageCircle className="w-4 h-4" />
-                Message Vendor
+                <MessageCircle className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Message Vendor</span>
+                <span className="sm:hidden">Message</span>
               </Button>
             </div>
           )}
