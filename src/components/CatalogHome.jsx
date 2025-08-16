@@ -1,62 +1,90 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Grid, List, Package } from 'lucide-react'
-import ProductGrid from './catalog/ProductGrid'
-import ProductList from './catalog/ProductList'
-import BottomNav from './catalog/BottomNav'
-import VendorHeader from './catalog/VendorHeader'
-import SearchBar from './search/SearchBar'
-import PhoneCapture from './PhoneCapture'
+import { MessageCircle, Phone, Share2, Package, Search, Grid, List } from 'lucide-react'
 import { vendorsAPI } from '../services/api'
+import { trackProductView } from '../services/tracking'
+import ProductCard from './catalog/ProductCard'
+import FloatingCart from './cart/FloatingCart'
 
 const CatalogHome = () => {
-  const { vendorId } = useParams() // This is the catalogId from URL
+  const { vendorId } = useParams()
   const [products, setProducts] = useState([])
   const [vendor, setVendor] = useState(null)
   const [viewMode, setViewMode] = useState('grid')
   const [searchQuery, setSearchQuery] = useState('')
   const [loading, setLoading] = useState(true)
-  const [showPhoneCapture, setShowPhoneCapture] = useState(false)
   const [error, setError] = useState('')
+  const [cartItems, setCartItems] = useState([])
 
   useEffect(() => {
     const fetchCatalog = async () => {
       try {
-        console.log('Fetching catalog for catalogId:', vendorId)
-        console.log('API URL:', `https://whatsapp-vendor.onrender.com/api/vendors/${vendorId}`)
-        
         const response = await vendorsAPI.getVendorCatalog(vendorId)
-        console.log('API Response:', response.data)
-        
         if (response.data && response.data.vendor) {
           setVendor(response.data.vendor)
           setProducts(response.data.products || [])
           setError('')
-          console.log('Loaded vendor:', response.data.vendor.businessName)
-          console.log('Loaded products:', response.data.products.length)
         } else {
-          console.log('No vendor data received')
           setError('Vendor not found')
-          setVendor(null)
-          setProducts([])
         }
       } catch (error) {
-        console.error('Failed to fetch catalog:', error)
-        console.error('Error status:', error.response?.status)
-        console.error('Error details:', error.response?.data)
-        setError(error.response?.data?.message || `Failed to load catalog: ${error.message}`)
+        setError('Failed to load catalog')
         setVendor(null)
         setProducts([])
       }
       setLoading(false)
-      
-      // Show phone capture after 10 seconds if not already captured
-      if (!localStorage.getItem('customerPhone')) {
-        setTimeout(() => setShowPhoneCapture(true), 10000)
-      }
     }
+    
+    // Load cart from localStorage
+    const savedCart = JSON.parse(localStorage.getItem('cart') || '[]')
+    setCartItems(savedCart)
+    
     fetchCatalog()
   }, [vendorId])
+
+  const handleAddToCart = (product) => {
+    const cartItem = { ...product, vendor, quantity: 1 }
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]')
+    
+    const existingIndex = existingCart.findIndex(item => item._id === product._id)
+    if (existingIndex >= 0) {
+      existingCart[existingIndex].quantity += 1
+    } else {
+      existingCart.push(cartItem)
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(existingCart))
+    setCartItems(existingCart)
+  }
+
+  const handleUpdateQuantity = (productId, quantity) => {
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]')
+    
+    if (quantity === 0) {
+      const updatedCart = existingCart.filter(item => item._id !== productId)
+      localStorage.setItem('cart', JSON.stringify(updatedCart))
+      setCartItems(updatedCart)
+    } else {
+      const updatedCart = existingCart.map(item => 
+        item._id === productId ? { ...item, quantity } : item
+      )
+      localStorage.setItem('cart', JSON.stringify(updatedCart))
+      setCartItems(updatedCart)
+    }
+  }
+
+  const handleRemoveItem = (productId) => {
+    const existingCart = JSON.parse(localStorage.getItem('cart') || '[]')
+    const updatedCart = existingCart.filter(item => item._id !== productId)
+    localStorage.setItem('cart', JSON.stringify(updatedCart))
+    setCartItems(updatedCart)
+  }
+
+  const handleContactVendor = () => {
+    const message = `Hi! I'm browsing your catalog and interested in your products. Please tell me more!`
+    const whatsappUrl = `https://wa.me/${vendor.phoneNumber.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, '_blank')
+  }
 
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -64,85 +92,153 @@ const CatalogHome = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-green-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-green-700 font-medium">Loading catalog...</p>
+        </div>
       </div>
     )
   }
 
-  if (!vendor && !loading) {
+  if (!vendor) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
         <div className="text-center">
-          <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">Vendor Not Found</h2>
-          <p className="text-gray-600 mb-2">{error || 'This catalog link may be invalid.'}</p>
-          <p className="text-sm text-gray-500">Vendor ID: {vendorId}</p>
-          <p className="text-sm text-gray-500">Check browser console for details</p>
+          <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+          <h2 className="text-xl font-bold text-gray-800 mb-2">Store Not Found</h2>
+          <p className="text-gray-600">This catalog link may be invalid.</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-16 sm:pb-20">
-      <div className="bg-white shadow-sm sticky top-0 z-10">
-        <div className="p-3 sm:p-4">
-          <h1 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3 truncate">{vendor?.businessName || 'Loading...'}</h1>
-          <p className="text-xs sm:text-sm text-gray-500 mb-1 sm:mb-2">Catalog ID: {vendorId}</p>
-          <p className="text-xs sm:text-sm text-gray-500 mb-2">Products: {products.length} | Vendor: {vendor ? 'Found' : 'Not Found'}</p>
-          {error && <p className="text-xs sm:text-sm text-red-500 mb-2">Error: {error}</p>}
-          <SearchBar value={searchQuery} onChange={setSearchQuery} />
-        </div>
-        
-        <div className="px-3 sm:px-4 pb-2 sm:pb-3 flex justify-end">
-          <div className="flex bg-gray-100 rounded-lg p-0.5 sm:p-1">
+    <div className="min-h-screen bg-green-50">
+      {/* Header */}
+      <div className="bg-white shadow-sm">
+        <div className="p-4">
+          {/* Vendor Info */}
+          <div className="flex items-center space-x-4 mb-4">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+              {vendor.logo ? (
+                <img src={vendor.logo} alt="Logo" className="w-full h-full object-cover rounded-full" />
+              ) : (
+                <Package className="w-8 h-8 text-green-600" />
+              )}
+            </div>
+            <div className="flex-1">
+              <h1 className="text-xl font-bold text-gray-800">{vendor.businessName}</h1>
+              <p className="text-gray-600 text-sm">by {vendor.name}</p>
+              <div className="flex items-center space-x-1 mt-1">
+                <Phone className="w-3 h-3 text-green-600" />
+                <span className="text-xs text-green-600">{vendor.phoneNumber}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="grid grid-cols-2 gap-3 mb-4">
             <button
-              onClick={() => setViewMode('grid')}
-              className={`p-1.5 sm:p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'text-gray-600'}`}
+              onClick={handleContactVendor}
+              className="bg-green-500 text-white px-4 py-3 rounded-xl font-medium flex items-center justify-center space-x-2 hover:bg-green-600 transition-colors"
             >
-              <Grid className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <MessageCircle className="w-5 h-5" />
+              <span>Chat on WhatsApp</span>
             </button>
             <button
-              onClick={() => setViewMode('list')}
-              className={`p-1.5 sm:p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow-sm' : 'text-gray-600'}`}
+              onClick={() => {
+                const catalogUrl = `https://whatsapp-buyer-frontend.vercel.app/catalog/${vendor.catalogId}`
+                navigator.share ? navigator.share({ url: catalogUrl }) : navigator.clipboard.writeText(catalogUrl)
+              }}
+              className="border border-green-500 text-green-600 px-4 py-3 rounded-xl font-medium flex items-center justify-center space-x-2 hover:bg-green-50 transition-colors"
             >
-              <List className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+              <Share2 className="w-5 h-5" />
+              <span>Share Store</span>
             </button>
+          </div>
+
+          {/* Search */}
+          <div className="relative mb-4">
+            <Search className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            />
+          </div>
+
+          {/* View Toggle */}
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-600">{filteredProducts.length} products available</p>
+            <div className="flex bg-gray-100 rounded-lg p-1">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm' : 'text-gray-600'}`}
+              >
+                <Grid className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow-sm' : 'text-gray-600'}`}
+              >
+                <List className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="p-3 sm:p-4 space-y-4 sm:space-y-6">
-        <VendorHeader 
-          vendor={vendor} 
-          productCount={products.length}
-          onMessage={() => {
-            const message = `Hi! I'm browsing your catalog and interested in your products.`
-            const whatsappUrl = `https://wa.me/${vendor?.phoneNumber?.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
-            window.open(whatsappUrl, '_blank')
-          }}
-        />
-        
+      {/* Products */}
+      <div className="p-4">
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-12 sm:py-16">
-            <Package className="w-12 h-12 sm:w-16 sm:h-16 text-gray-300 mx-auto mb-3 sm:mb-4" />
-            <p className="text-sm sm:text-base text-gray-500">No products found</p>
+          <div className="text-center py-16">
+            <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+            <p className="text-gray-500">No products found</p>
           </div>
         ) : viewMode === 'grid' ? (
-          <ProductGrid products={filteredProducts} vendor={vendor} showMessageButtons={true} />
+          <div className="grid grid-cols-2 gap-4">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                vendor={vendor}
+                onAddToCart={handleAddToCart}
+              />
+            ))}
+          </div>
         ) : (
-          <ProductList products={filteredProducts} vendor={vendor} showMessageButtons={true} />
+          <div className="space-y-4">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                vendor={vendor}
+                onAddToCart={handleAddToCart}
+              />
+            ))}
+          </div>
         )}
       </div>
 
-      <BottomNav vendor={vendor} />
-      
-      {showPhoneCapture && (
-        <PhoneCapture
-          onSubmit={() => setShowPhoneCapture(false)}
-          onSkip={() => setShowPhoneCapture(false)}
-        />
+      {/* Floating Cart */}
+      <FloatingCart
+        items={cartItems}
+        vendor={vendor}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+      />
+
+      {/* Floating WhatsApp Button */}
+      {cartItems.length === 0 && (
+        <button
+          onClick={handleContactVendor}
+          className="fixed bottom-6 right-6 w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors z-50"
+        >
+          <MessageCircle className="w-6 h-6" />
+        </button>
       )}
     </div>
   )
