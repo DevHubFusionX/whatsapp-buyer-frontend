@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { MessageCircle, Phone, Share2, Package, Search, Heart, Star, ShoppingCart, ArrowLeft, Filter, Grid, List, MapPin, Clock, Zap, Gift, Users } from 'lucide-react'
-import { vendorsAPI } from '../services/api'
+import { vendorsAPI, buyerAPI } from '../services/api'
 import FloatingCart from './cart/FloatingCart'
 
 const ModernCatalogHome = () => {
@@ -81,7 +81,22 @@ const ModernCatalogHome = () => {
     localStorage.setItem('wishlist', JSON.stringify(newWishlist))
   }
 
-  const handleContactVendor = () => {
+  const handleContactVendor = async () => {
+    // Log interaction
+    try {
+      const buyerId = localStorage.getItem('buyerId')
+      if (buyerId) {
+        await buyerAPI.logInteraction({
+          buyerId,
+          vendorId: vendor._id,
+          action: 'MessageVendor',
+          timestamp: new Date().toISOString()
+        })
+      }
+    } catch (error) {
+      console.error('Failed to log interaction:', error)
+    }
+
     const message = `Hi! I'm interested in your products from your online catalog. Can you help me?`
     const whatsappUrl = `https://wa.me/${vendor.phoneNumber.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
