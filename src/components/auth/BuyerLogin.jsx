@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { Mail, Lock, Eye, EyeOff, Sparkles } from 'lucide-react'
+import { FaEnvelope, FaLock, FaEye, FaEyeSlash, FaStar } from 'react-icons/fa'
 import { buyerAPI } from '../../services/api'
 
 const BuyerLogin = () => {
@@ -51,7 +51,7 @@ const BuyerLogin = () => {
         localStorage.setItem('rememberBuyer', 'true')
       }
 
-      const redirectTo = location.state?.from || '/'
+      const redirectTo = location.state?.from || '/home'
       navigate(redirectTo)
     } catch (error) {
       setErrors({ 
@@ -66,7 +66,7 @@ const BuyerLogin = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <Sparkles className="w-10 h-10 text-white" />
+            <FaStar className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
             Welcome Back
@@ -85,7 +85,7 @@ const BuyerLogin = () => {
             <div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="w-5 h-5 text-gray-400" />
+                  <FaEnvelope className="w-5 h-5 text-gray-400" />
                 </div>
                 <input
                   type="email"
@@ -104,7 +104,7 @@ const BuyerLogin = () => {
             <div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Lock className="w-5 h-5 text-gray-400" />
+                  <FaLock className="w-5 h-5 text-gray-400" />
                 </div>
                 <input
                   type={showPassword ? 'text' : 'password'}
@@ -122,9 +122,9 @@ const BuyerLogin = () => {
                   className="absolute inset-y-0 right-0 pr-4 flex items-center"
                 >
                   {showPassword ? (
-                    <EyeOff className="w-5 h-5 text-gray-400 hover:text-gray-600" />
+                    <FaEyeSlash className="w-5 h-5 text-gray-400 hover:text-gray-600" />
                   ) : (
-                    <Eye className="w-5 h-5 text-gray-400 hover:text-gray-600" />
+                    <FaEye className="w-5 h-5 text-gray-400 hover:text-gray-600" />
                   )}
                 </button>
               </div>
