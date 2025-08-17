@@ -157,7 +157,7 @@ const HomePage = () => {
                     </div>
                   </div>
                   <Link
-                    to={`/search?vendor=${vendor._id}`}
+                    to={`/store/${vendor._id}`}
                     className="bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-green-600 transition-colors"
                   >
                     Visit Store

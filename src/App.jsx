@@ -6,6 +6,7 @@ import ProductDetail from './components/ProductDetail'
 import CartPage from './components/CartPage'
 import CheckoutPage from './components/CheckoutPage'
 import SearchPage from './components/SearchPage'
+import VendorStorePage from './components/VendorStorePage'
 import BuyerOrdersPage from './components/BuyerOrdersPage'
 import BuyerProfile from './components/BuyerProfile'
 import BuyerSignup from './components/auth/BuyerSignup'
@@ -47,6 +48,11 @@ function App() {
           <Route path="/search" element={
             <ProtectedRoute>
               <SearchPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/store/:vendorId" element={
+            <ProtectedRoute>
+              <VendorStorePage />
             </ProtectedRoute>
           } />
           <Route path="/product/:productId" element={

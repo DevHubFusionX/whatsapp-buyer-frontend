@@ -1,27 +1,43 @@
 import { useState, useEffect } from 'react'
 import { FaSearch, FaStar, FaShoppingBag, FaHeart, FaFilter } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { buyerAPI } from '../services/api'
 import Layout from './Layout'
 
 const SearchPage = () => {
+  const [searchParams] = useSearchParams()
+  const vendorId = searchParams.get('vendor')
   const [searchQuery, setSearchQuery] = useState('')
   const [products, setProducts] = useState([])
   const [filteredProducts, setFilteredProducts] = useState([])
+  const [vendor, setVendor] = useState(null)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await buyerAPI.getProducts()
-        setProducts(response.data)
-        setFilteredProducts(response.data)
+        if (vendorId) {
+          // Fetch vendor-specific products
+          const response = await buyerAPI.getProducts({ vendor: vendorId })
+          setProducts(response.data)
+          setFilteredProducts(response.data)
+          
+          // Fetch vendor info
+          const vendorsRes = await buyerAPI.getVendors()
+          const vendorInfo = vendorsRes.data.find(v => v._id === vendorId)
+          setVendor(vendorInfo)
+        } else {
+          // Fetch all products
+          const response = await buyerAPI.getProducts()
+          setProducts(response.data)
+          setFilteredProducts(response.data)
+        }
       } catch (error) {
-        console.error('Failed to fetch products:', error)
+        console.error('Failed to fetch data:', error)
       }
     }
-    fetchProducts()
-  }, [])
+    fetchData()
+  }, [vendorId])
 
   useEffect(() => {
     if (searchQuery.trim()) {
@@ -38,6 +54,28 @@ const SearchPage = () => {
   return (
     <Layout>
       <div className="p-4 space-y-4">
+        {/* Vendor Header */}
+        {vendor && (
+          <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 mb-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                {vendor.logo ? (
+                  <img src={vendor.logo} alt={vendor.businessName} className="w-10 h-10 object-cover rounded-lg" />
+                ) : (
+                  <FaShoppingBag className="w-6 h-6 text-green-600" />
+                )}
+              </div>
+              <div>
+                <h2 className="font-bold text-gray-900">{vendor.businessName}</h2>
+                <div className="flex items-center space-x-2">
+                  <FaStar className="w-4 h-4 text-yellow-400" />
+                  <span className="text-sm text-gray-600">{vendor.rating || 4.8}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
         {/* Search Bar */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -45,7 +83,7 @@ const SearchPage = () => {
           </div>
           <input
             type="text"
-            placeholder="Search products..."
+            placeholder={vendor ? `Search in ${vendor.businessName}...` : "Search products..."}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-12 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
