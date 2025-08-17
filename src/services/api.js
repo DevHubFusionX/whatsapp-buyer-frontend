@@ -16,6 +16,23 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+// Handle auth errors
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      // Clear invalid token
+      localStorage.removeItem('buyerToken')
+      localStorage.removeItem('buyerId')
+      // Redirect to login if not already there
+      if (!window.location.pathname.includes('/login') && !window.location.pathname.includes('/signup')) {
+        window.location.href = '/login'
+      }
+    }
+    return Promise.reject(error)
+  }
+)
+
 export const vendorsAPI = {
   getVendorCatalog: (catalogId) => api.get(`/vendors/${catalogId}`)
 };
@@ -28,11 +45,12 @@ export const buyerAPI = {
   createOrder: (orderData) => api.post('/buyer/orders', orderData),
   trackOrder: (trackingData) => api.post('/buyer/track-order', trackingData),
   trackInterest: (data) => api.post('/buyer/track-interest', data),
-  signup: (userData) => api.post('/auth/buyer/signup', userData),
-  login: (credentials) => api.post('/auth/buyer/login', credentials),
-  getProfile: () => api.get('/auth/buyer/profile'),
-  updateProfile: (profileData) => api.put('/auth/buyer/profile', profileData),
-  logInteraction: (interactionData) => api.post('/buyer/interactions', interactionData)
+  signup: (userData) => api.post('/auth/signup', userData),
+  login: (credentials) => api.post('/auth/login', credentials),
+  getProfile: () => api.get('/buyer/profile'),
+  updateProfile: (profileData) => api.put('/buyer/profile', profileData),
+  logInteraction: (interactionData) => api.post('/buyer/interactions', interactionData),
+  checkAuth: () => api.get('/buyer/auth-check')
 };
 
 export default api;

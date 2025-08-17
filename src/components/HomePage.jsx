@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Search, MapPin, Star, TrendingUp, Heart, ShoppingBag, Filter, Bell, User, Clock, Zap, Gift, Home, ArrowRight, Sparkles } from 'lucide-react'
+import { Search, MapPin, Star, TrendingUp, Heart, ShoppingBag, Filter, Bell, User, Clock, Zap, Gift, Home, ArrowRight, Sparkles, LogIn, UserPlus } from 'lucide-react'
 import { 
   MdFastfood, 
   MdCheckroom, 
@@ -12,6 +12,7 @@ import {
 } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { buyerAPI } from '../services/api'
+import api from '../services/api'
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -23,6 +24,8 @@ const HomePage = () => {
   const [notifications, setNotifications] = useState([])
   const [deals, setDeals] = useState([])
   const [userName, setUserName] = useState('')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [buyer, setBuyer] = useState(null)
 
   const categories = [
     { name: 'Food', icon: MdFastfood, color: 'bg-orange-100 text-orange-600' },
@@ -34,6 +37,23 @@ const HomePage = () => {
   const locations = ['All Locations', 'Lagos', 'Abuja', 'Port Harcourt', 'Kano', 'Ibadan']
 
   useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await api.get('/buyer/auth-check')
+        if (response.data.authenticated) {
+          setIsAuthenticated(true)
+          setBuyer(response.data.buyer)
+          setUserName(response.data.buyer.name)
+        } else {
+          setIsAuthenticated(false)
+          setUserName('Guest')
+        }
+      } catch (error) {
+        setIsAuthenticated(false)
+        setUserName('Guest')
+      }
+    }
+
     const fetchData = async () => {
       try {
         const [productsRes, vendorsRes] = await Promise.all([
@@ -45,11 +65,9 @@ const HomePage = () => {
         setFeaturedVendors(vendorsRes.data.slice(0, 4))
         
         // Load user data from localStorage
-        const savedUser = localStorage.getItem('buyerName') || 'Guest'
         const savedWishlist = JSON.parse(localStorage.getItem('wishlist') || '[]')
         const savedRecentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed') || '[]')
         
-        setUserName(savedUser)
         setWishlist(savedWishlist)
         setRecentlyViewed(savedRecentlyViewed.slice(0, 4))
         
@@ -69,6 +87,7 @@ const HomePage = () => {
       }
     }
     
+    checkAuth()
     fetchData()
   }, [])
 
@@ -89,25 +108,40 @@ const HomePage = () => {
               <p className="text-sm text-gray-600 mt-1">Hello, {userName}! 👋</p>
             </div>
             <div className="flex items-center space-x-2">
-              <button className="relative p-3 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-2xl transition-all duration-200">
-                <Bell className="w-5 h-5" />
-                {notifications.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center animate-pulse">
-                    {notifications.length}
-                  </span>
-                )}
-              </button>
-              <Link to="/wishlist" className="relative p-3 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-2xl transition-all duration-200">
-                <Heart className="w-5 h-5" />
-                {wishlist.length > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center">
-                    {wishlist.length}
-                  </span>
-                )}
-              </Link>
-              <Link to="/profile" className="p-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-2xl transition-all duration-200">
-                <User className="w-5 h-5" />
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <button className="relative p-3 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-2xl transition-all duration-200">
+                    <Bell className="w-5 h-5" />
+                    {notifications.length > 0 && (
+                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center animate-pulse">
+                        {notifications.length}
+                      </span>
+                    )}
+                  </button>
+                  <Link to="/wishlist" className="relative p-3 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-2xl transition-all duration-200">
+                    <Heart className="w-5 h-5" />
+                    {wishlist.length > 0 && (
+                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center">
+                        {wishlist.length}
+                      </span>
+                    )}
+                  </Link>
+                  <Link to="/profile" className="p-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-2xl transition-all duration-200">
+                    <User className="w-5 h-5" />
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="flex items-center space-x-2 px-4 py-2 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-2xl transition-all duration-200">
+                    <LogIn className="w-4 h-4" />
+                    <span className="text-sm font-medium">Login</span>
+                  </Link>
+                  <Link to="/signup" className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white hover:bg-green-700 rounded-2xl transition-all duration-200">
+                    <UserPlus className="w-4 h-4" />
+                    <span className="text-sm font-medium">Sign Up</span>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
           
@@ -267,10 +301,17 @@ const HomePage = () => {
             <span className="text-xs">Orders</span>
           </Link>
           
-          <Link to="/profile" className="flex flex-col items-center p-2 text-gray-400">
-            <User className="w-6 h-6 mb-1" />
-            <span className="text-xs">Profile</span>
-          </Link>
+          {isAuthenticated ? (
+            <Link to="/profile" className="flex flex-col items-center p-2 text-gray-400">
+              <User className="w-6 h-6 mb-1" />
+              <span className="text-xs">Profile</span>
+            </Link>
+          ) : (
+            <Link to="/login" className="flex flex-col items-center p-2 text-gray-400">
+              <LogIn className="w-6 h-6 mb-1" />
+              <span className="text-xs">Login</span>
+            </Link>
+          )}
         </div>
       </div>
       

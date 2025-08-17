@@ -288,8 +288,17 @@ const BuyerProfile = () => {
         {/* Logout Button */}
         <button
           onClick={() => {
-            localStorage.clear()
+            // Clear authentication data
+            localStorage.removeItem('buyerToken')
+            localStorage.removeItem('buyerId')
+            localStorage.removeItem('buyerName')
+            localStorage.removeItem('buyerEmail')
+            localStorage.removeItem('buyerPhone')
+            localStorage.removeItem('buyerAddress')
+            // Navigate to home
             navigate('/')
+            // Reload to reset auth state
+            window.location.reload()
           }}
           className="w-full bg-red-50 text-red-600 py-4 rounded-3xl font-semibold hover:bg-red-100 transition-colors flex items-center justify-center space-x-2 border border-red-200"
         >
