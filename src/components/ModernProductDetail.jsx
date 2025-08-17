@@ -107,9 +107,9 @@ const ModernProductDetail = () => {
       <div className="bg-white/80 backdrop-blur-lg shadow-lg sticky top-0 z-20">
         <div className="p-4">
           <div className="flex items-center justify-between">
-            <Link to={`/catalog/${vendor?.catalogId}`} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+            <button onClick={() => window.history.back()} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
               <ArrowLeft className="w-6 h-6 text-gray-700" />
-            </Link>
+            </button>
             <div className="flex items-center space-x-3">
               <button
                 onClick={handleShare}

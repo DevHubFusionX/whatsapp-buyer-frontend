@@ -7,6 +7,7 @@ import CartPage from './components/CartPage'
 import CheckoutPage from './components/CheckoutPage'
 import SearchPage from './components/SearchPage'
 import VendorStorePage from './components/VendorStorePage'
+import ModernCatalogHome from './components/ModernCatalogHome'
 import BuyerOrdersPage from './components/BuyerOrdersPage'
 import BuyerProfile from './components/BuyerProfile'
 import BuyerSignup from './components/auth/BuyerSignup'
@@ -53,6 +54,11 @@ function App() {
           <Route path="/store/:vendorId" element={
             <ProtectedRoute>
               <VendorStorePage />
+            </ProtectedRoute>
+          } />
+          <Route path="/catalog/:catalogId" element={
+            <ProtectedRoute>
+              <ModernCatalogHome />
             </ProtectedRoute>
           } />
           <Route path="/product/:productId" element={

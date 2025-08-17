@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { FaSearch, FaStar, FaShoppingBag, FaHeart, FaArrowLeft } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { buyerAPI } from '../services/api'
+import { buyerAPI, vendorsAPI } from '../services/api'
 import Layout from './Layout'
 
 const VendorStorePage = () => {
@@ -17,13 +17,13 @@ const VendorStorePage = () => {
   useEffect(() => {
     const fetchVendorData = async () => {
       try {
-        const [vendorsRes, productsRes] = await Promise.all([
-          buyerAPI.getVendors(),
-          buyerAPI.getProducts({ vendor: vendorId })
-        ])
-        
-        const vendorInfo = vendorsRes.data.find(v => v._id === vendorId)
+        // First get vendor info by catalogId
+        const vendorRes = await vendorsAPI.getVendorCatalog(vendorId)
+        const vendorInfo = vendorRes.data.vendor
         setVendor(vendorInfo)
+        
+        // Then get products for this vendor
+        const productsRes = await buyerAPI.getProducts({ vendor: vendorInfo.id })
         setProducts(productsRes.data)
         setFilteredProducts(productsRes.data)
       } catch (error) {
