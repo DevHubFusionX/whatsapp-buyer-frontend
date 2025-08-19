@@ -6,7 +6,11 @@ const API_BASE_URL = process.env.NODE_ENV === 'production'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  withCredentials: true
+  withCredentials: false,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
 });
 
 // Add auth token to requests if available
@@ -52,7 +56,10 @@ export const buyerAPI = {
   getProfile: () => api.get('/buyer/profile'),
   updateProfile: (profileData) => api.put('/buyer/profile', profileData),
   logInteraction: (interactionData) => api.post('/buyer/interactions', interactionData),
-  checkAuth: () => api.get('/buyer/auth-check')
+  checkAuth: () => api.get('/buyer/auth-check'),
+  forgotPassword: (data) => api.post('/buyer/forgot-password', data),
+  verifyOTP: (data) => api.post('/buyer/verify-otp', data),
+  resetPassword: (data) => api.post('/buyer/reset-password', data)
 };
 
 export default api;

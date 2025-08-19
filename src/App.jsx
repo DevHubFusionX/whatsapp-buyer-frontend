@@ -12,6 +12,7 @@ import BuyerOrdersPage from './components/BuyerOrdersPage'
 import BuyerProfile from './components/BuyerProfile'
 import BuyerSignup from './components/auth/BuyerSignup'
 import BuyerLogin from './components/auth/BuyerLogin'
+import ForgotPassword from './components/auth/ForgotPassword'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 
 const AuthenticatedLandingPage = () => {
@@ -41,6 +42,7 @@ function App() {
           <Route path="/" element={<AuthenticatedLandingPage />} />
           <Route path="/signup" element={<BuyerSignup />} />
           <Route path="/login" element={<BuyerLogin />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/home" element={
             <ProtectedRoute>
               <HomePage />

@@ -8,6 +8,7 @@ const BuyerLogin = () => {
   const location = useLocation()
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [successMessage, setSuccessMessage] = useState(location.state?.message || '')
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -76,6 +77,11 @@ const BuyerLogin = () => {
 
         <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
           <form onSubmit={handleSubmit} className="space-y-6">
+            {successMessage && (
+              <div className="bg-green-50 text-green-600 p-4 rounded-2xl text-sm border border-green-200">
+                {successMessage}
+              </div>
+            )}
             {errors.submit && (
               <div className="bg-red-50 text-red-600 p-4 rounded-2xl text-sm border border-red-200">
                 {errors.submit}
