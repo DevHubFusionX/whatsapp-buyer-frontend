@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { FaStar, FaHeart, FaArrowLeft, FaWhatsapp, FaStore, FaShoppingCart, FaShare, FaShield, FaTruck, FaPhone } from 'react-icons/fa'
+import { FaStar, FaHeart, FaArrowLeft, FaWhatsapp, FaStore, FaShoppingCart, FaShare, FaTruck, FaPhone } from 'react-icons/fa'
+import { MdSecurity } from 'react-icons/md'
 import { buyerAPI } from '../services/api'
 
 const ProductDetail = () => {
@@ -152,7 +153,7 @@ const ProductDetail = () => {
             <span className="text-xs text-gray-600">Fast Delivery</span>
           </div>
           <div className="text-center p-3 bg-gray-50 rounded-xl">
-            <FaShield className="w-5 h-5 text-green-600 mx-auto mb-2" />
+            <MdSecurity className="w-5 h-5 text-green-600 mx-auto mb-2" />
             <span className="text-xs text-gray-600">Quality Assured</span>
           </div>
           <div className="text-center p-3 bg-gray-50 rounded-xl">
