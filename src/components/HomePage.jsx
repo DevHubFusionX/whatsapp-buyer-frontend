@@ -4,6 +4,7 @@ import { MdFastfood, MdCheckroom, MdPhoneIphone, MdHome } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { buyerAPI } from '../services/api'
 import Layout from './Layout'
+import { HomePageSkeleton } from './ui/LoadingSkeleton'
 
 const HomePage = () => {
   const [featuredProducts, setFeaturedProducts] = useState([])
@@ -40,9 +41,7 @@ const HomePage = () => {
   if (loading) {
     return (
       <Layout>
-        <div className="flex items-center justify-center h-64">
-          <div className="w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
-        </div>
+        <HomePageSkeleton />
       </Layout>
     )
   }

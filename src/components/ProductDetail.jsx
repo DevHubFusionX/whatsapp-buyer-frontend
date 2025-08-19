@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { FaStar, FaHeart, FaArrowLeft, FaWhatsapp, FaStore, FaShoppingCart, FaShare, FaTruck, FaPhone } from 'react-icons/fa'
 import { MdSecurity } from 'react-icons/md'
 import { buyerAPI } from '../services/api'
+import { shareProduct } from '../utils/share'
 
 const ProductDetail = () => {
   const { productId } = useParams()
@@ -52,13 +53,10 @@ const ProductDetail = () => {
     navigate('/cart')
   }
 
-  const shareProduct = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: product.name,
-        text: `Check out ${product.name} for ₦${product.price?.toLocaleString()}`,
-        url: window.location.href
-      })
+  const handleShareProduct = async () => {
+    const result = await shareProduct(product)
+    if (result.success && result.method === 'clipboard') {
+      alert('Product link copied to clipboard!')
     }
   }
 
@@ -88,7 +86,7 @@ const ProductDetail = () => {
           <FaArrowLeft className="w-4 h-4 text-gray-700" />
         </button>
         <div className="flex items-center space-x-3">
-          <button onClick={shareProduct} className="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow">
+          <button onClick={handleShareProduct} className="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow">
             <FaShare className="w-4 h-4 text-gray-700" />
           </button>
           <button onClick={() => setIsSaved(!isSaved)} className="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow">

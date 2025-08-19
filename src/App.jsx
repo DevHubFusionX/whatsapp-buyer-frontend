@@ -12,6 +12,7 @@ import BuyerProfile from './components/BuyerProfile'
 import BuyerSignup from './components/auth/BuyerSignup'
 import BuyerLogin from './components/auth/BuyerLogin'
 import ForgotPassword from './components/auth/ForgotPassword'
+import NotFound from './components/NotFound'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 
 const AuthenticatedLandingPage = () => {
@@ -78,6 +79,7 @@ function App() {
               <BuyerProfile />
             </ProtectedRoute>
           } />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
