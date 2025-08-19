@@ -7,8 +7,8 @@ const LandingPage = () => {
   const features = [
     {
       icon: FaShoppingCart,
-      title: 'Easy Shopping',
-      description: 'Browse products from local vendors in your area with a simple, intuitive interface'
+      title: 'No Signup Required',
+      description: 'Start browsing immediately! No registration needed to explore products and order via WhatsApp'
     },
     {
       icon: FaWhatsapp,
@@ -17,13 +17,13 @@ const LandingPage = () => {
     },
     {
       icon: FaMapMarkerAlt,
-      title: 'Local Focus',
-      description: 'Discover amazing products and services from vendors in your neighborhood'
+      title: 'Instant Ordering',
+      description: 'Found something you like? Order instantly via WhatsApp with just one click'
     },
     {
       icon: FaStar,
-      title: 'Quality Assured',
-      description: 'All vendors are verified and rated by the community for your peace of mind'
+      title: 'Optional Account',
+      description: 'Sign up only if you want to track orders and save favorites - completely optional!'
     }
   ]
 
@@ -58,26 +58,26 @@ const LandingPage = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Browse Products,
-            <span className="text-[#25D366]"> Order on WhatsApp</span>
+            <span className="text-[#25D366]"> Order Instantly</span>
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Discover amazing products from local vendors. Browse catalogs, find what you love, 
-            then order directly via WhatsApp for a personal shopping experience.
+            No signup required! Browse thousands of products from local vendors, 
+            then order directly via WhatsApp. Simple, fast, and personal.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
-              onClick={() => navigate('/login')}
+              onClick={() => navigate('/home')}
               className="bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold py-4 px-8 rounded-2xl transition-colors flex items-center justify-center space-x-2 text-lg"
             >
               <FaShoppingCart className="w-6 h-6" />
-              <span>Login</span>
+              <span>Browse Products</span>
               <FaArrowRight className="w-5 h-5" />
             </button>
             <button
               onClick={() => navigate('/signup')}
               className="bg-white hover:bg-gray-50 text-gray-900 font-bold py-4 px-8 rounded-2xl border-2 border-gray-200 transition-colors flex items-center justify-center space-x-2 text-lg"
             >
-              <span>Sign Up</span>
+              <span>Sign Up (Optional)</span>
             </button>
           </div>
         </div>
@@ -129,8 +129,8 @@ const LandingPage = () => {
               <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-600">1</span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Browse Catalogs</h4>
-              <p className="text-gray-600">Explore beautiful product catalogs from verified vendors with detailed photos and descriptions</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Browse Freely</h4>
+              <p className="text-gray-600">No signup required! Explore thousands of products from local vendors instantly</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -152,18 +152,26 @@ const LandingPage = () => {
         {/* CTA Section */}
         <div className="text-center mt-16">
           <h3 className="text-3xl font-bold text-gray-900 mb-4">
-            Ready to Start Shopping?
+            Start Browsing Now!
           </h3>
           <p className="text-xl text-gray-600 mb-8">
-            Join thousands of happy customers supporting local businesses
+            No registration needed. Browse products and order via WhatsApp instantly.
           </p>
-          <button
-            onClick={() => navigate('/signup')}
-            className="bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold py-4 px-12 rounded-2xl transition-colors text-lg inline-flex items-center space-x-2"
-          >
-            <FaShoppingCart className="w-6 h-6" />
-            <span>Get Started Now</span>
-          </button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() => navigate('/home')}
+              className="bg-[#25D366] hover:bg-[#20BA5A] text-white font-bold py-4 px-8 rounded-2xl transition-colors text-lg inline-flex items-center space-x-2"
+            >
+              <FaShoppingCart className="w-6 h-6" />
+              <span>Browse Products</span>
+            </button>
+            <button
+              onClick={() => navigate('/signup')}
+              className="bg-white hover:bg-gray-50 text-gray-900 font-bold py-4 px-8 rounded-2xl border-2 border-gray-200 transition-colors text-lg"
+            >
+              Sign Up for Extras
+            </button>
+          </div>
         </div>
       </div>
 
