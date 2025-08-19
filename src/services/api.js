@@ -51,15 +51,15 @@ export const buyerAPI = {
   createOrder: (orderData) => api.post('/buyer/orders', orderData),
   trackOrder: (trackingData) => api.post('/buyer/track-order', trackingData),
   trackInterest: (data) => api.post('/buyer/track-interest', data),
-  signup: (userData) => api.post('/auth/signup', userData),
+  signup: (userData) => api.post('/auth/buyer/signup', userData),
   login: (credentials) => api.post('/auth/login', credentials),
   getProfile: () => api.get('/buyer/profile'),
   updateProfile: (profileData) => api.put('/buyer/profile', profileData),
   logInteraction: (interactionData) => api.post('/buyer/interactions', interactionData),
   checkAuth: () => api.get('/buyer/auth-check'),
-  forgotPassword: (data) => api.post('/buyer/forgot-password', data),
-  verifyOTP: (data) => api.post('/buyer/verify-otp', data),
-  resetPassword: (data) => api.post('/buyer/reset-password', data)
+  forgotPassword: (data) => api.post('/auth/forgot-password', data),
+  verifyOTP: (data) => api.post('/auth/verify-reset-otp', data),
+  resetPassword: (data) => api.post('/auth/reset-password', data)
 };
 
 export default api;

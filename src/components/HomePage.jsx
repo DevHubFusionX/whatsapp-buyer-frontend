@@ -4,6 +4,7 @@ import { MdFastfood, MdCheckroom, MdPhoneIphone, MdHome } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { buyerAPI } from '../services/api'
 import Layout from './Layout'
+import GuestPrompt from './GuestPrompt'
 import { HomePageSkeleton } from './ui/LoadingSkeleton'
 
 const HomePage = () => {
@@ -11,6 +12,12 @@ const HomePage = () => {
   const [featuredVendors, setFeaturedVendors] = useState([])
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem('buyerToken')
+    setIsLoggedIn(!!token)
+  }, [])
 
   const categoryList = [
     { name: 'Food', icon: MdFastfood, color: 'bg-orange-100 text-orange-600' },
@@ -49,6 +56,9 @@ const HomePage = () => {
   return (
     <Layout>
       <div className="p-4 space-y-6">
+        {/* Guest Prompt */}
+        {!isLoggedIn && <GuestPrompt />}
+        
         {/* Search Bar */}
         <Link to="/search" className="block">
           <div className="relative">

@@ -1,14 +1,17 @@
 import { Link, useLocation } from 'react-router-dom'
-import { FaHome, FaSearch, FaStore, FaUser, FaBell } from 'react-icons/fa'
+import { FaHome, FaSearch, FaStore, FaUser, FaBell, FaSignInAlt } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 
 const Layout = ({ children }) => {
   const location = useLocation()
   const [userName, setUserName] = useState('')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    const name = localStorage.getItem('buyerName') || 'User'
-    setUserName(name)
+    const token = localStorage.getItem('buyerToken')
+    const name = localStorage.getItem('buyerName')
+    setIsLoggedIn(!!token)
+    setUserName(name || 'Guest')
   }, [])
 
   const isActive = (path) => location.pathname === path
@@ -27,15 +30,24 @@ const Layout = ({ children }) => {
             </Link>
             
             <div className="flex items-center space-x-3">
-              <button className="p-2 text-gray-600 hover:text-green-600">
-                <FaBell className="w-5 h-5" />
-              </button>
-              <Link to="/profile" className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                  <FaUser className="w-4 h-4 text-gray-600" />
-                </div>
-                <span className="text-sm font-medium text-gray-700">{userName}</span>
-              </Link>
+              {isLoggedIn ? (
+                <>
+                  <button className="p-2 text-gray-600 hover:text-green-600">
+                    <FaBell className="w-5 h-5" />
+                  </button>
+                  <Link to="/profile" className="flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                      <FaUser className="w-4 h-4 text-gray-600" />
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">{userName}</span>
+                  </Link>
+                </>
+              ) : (
+                <Link to="/login" className="flex items-center space-x-2 bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 transition-colors">
+                  <FaSignInAlt className="w-4 h-4" />
+                  <span className="text-sm font-medium">Login</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -66,20 +78,30 @@ const Layout = ({ children }) => {
           </Link>
           
           <Link 
-            to="/orders" 
-            className={`flex flex-col items-center p-2 ${isActive('/orders') ? 'text-green-600' : 'text-gray-400'}`}
+            to="/stores" 
+            className={`flex flex-col items-center p-2 ${isActive('/stores') ? 'text-green-600' : 'text-gray-400'}`}
           >
             <FaStore className="w-5 h-5 mb-1" />
             <span className="text-xs">Stores</span>
           </Link>
           
-          <Link 
-            to="/profile" 
-            className={`flex flex-col items-center p-2 ${isActive('/profile') ? 'text-green-600' : 'text-gray-400'}`}
-          >
-            <FaUser className="w-5 h-5 mb-1" />
-            <span className="text-xs">Profile</span>
-          </Link>
+          {isLoggedIn ? (
+            <Link 
+              to="/profile" 
+              className={`flex flex-col items-center p-2 ${isActive('/profile') ? 'text-green-600' : 'text-gray-400'}`}
+            >
+              <FaUser className="w-5 h-5 mb-1" />
+              <span className="text-xs">Profile</span>
+            </Link>
+          ) : (
+            <Link 
+              to="/login" 
+              className={`flex flex-col items-center p-2 ${isActive('/login') ? 'text-green-600' : 'text-gray-400'}`}
+            >
+              <FaSignInAlt className="w-5 h-5 mb-1" />
+              <span className="text-xs">Login</span>
+            </Link>
+          )}
         </div>
       </div>
     </div>

@@ -43,37 +43,13 @@ function App() {
           <Route path="/signup" element={<BuyerSignup />} />
           <Route path="/login" element={<BuyerLogin />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/home" element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          } />
-          <Route path="/search" element={
-            <ProtectedRoute>
-              <SearchPage />
-            </ProtectedRoute>
-          } />
-          <Route path="/store/:vendorId" element={
-            <ProtectedRoute>
-              <VendorStorePage />
-            </ProtectedRoute>
-          } />
-          <Route path="/catalog/:catalogId" element={
-            <ProtectedRoute>
-              <ModernCatalogHome />
-            </ProtectedRoute>
-          } />
-          <Route path="/product/:productId" element={
-            <ProtectedRoute>
-              <ProductDetail />
-            </ProtectedRoute>
-          } />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/store/:vendorId" element={<VendorStorePage />} />
+          <Route path="/catalog/:catalogId" element={<ModernCatalogHome />} />
+          <Route path="/product/:productId" element={<ProductDetail />} />
 
-          <Route path="/orders" element={
-            <ProtectedRoute>
-              <VendorStoresPage />
-            </ProtectedRoute>
-          } />
+          <Route path="/stores" element={<VendorStoresPage />} />
           <Route path="/profile" element={
             <ProtectedRoute>
               <BuyerProfile />

@@ -4,6 +4,7 @@ import { FaStar, FaHeart, FaArrowLeft, FaWhatsapp, FaStore, FaShoppingCart, FaSh
 import { MdSecurity } from 'react-icons/md'
 import { buyerAPI } from '../services/api'
 import { shareProduct } from '../utils/share'
+import GuestPrompt from './GuestPrompt'
 
 const ProductDetail = () => {
   const { productId } = useParams()
@@ -14,6 +15,12 @@ const ProductDetail = () => {
   const [isSaved, setIsSaved] = useState(false)
   const [quantity, setQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState(0)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem('buyerToken')
+    setIsLoggedIn(!!token)
+  }, [])
 
   useEffect(() => {
     const fetchProduct = async () => {

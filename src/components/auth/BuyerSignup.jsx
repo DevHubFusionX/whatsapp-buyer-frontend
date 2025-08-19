@@ -44,9 +44,9 @@ const BuyerSignup = () => {
       const response = await buyerAPI.signup(formData)
       
       localStorage.setItem('buyerToken', response.data.token)
-      localStorage.setItem('buyerId', response.data.buyer._id)
-      localStorage.setItem('buyerName', response.data.buyer.name)
-      localStorage.setItem('buyerEmail', response.data.buyer.email)
+      localStorage.setItem('buyerId', response.data.user._id)
+      localStorage.setItem('buyerName', response.data.user.name)
+      localStorage.setItem('buyerEmail', response.data.user.email)
 
       const redirectTo = location.state?.from || '/home'
       navigate(redirectTo)
