@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react'
 import LandingPage from './components/LandingPage'
 import HomePage from './components/HomePage'
 import ProductDetail from './components/ProductDetail'
-import CartPage from './components/CartPage'
-import CheckoutPage from './components/CheckoutPage'
+
 import SearchPage from './components/SearchPage'
 import VendorStorePage from './components/VendorStorePage'
+import VendorStoresPage from './components/VendorStoresPage'
 import ModernCatalogHome from './components/ModernCatalogHome'
-import BuyerOrdersPage from './components/BuyerOrdersPage'
 import BuyerProfile from './components/BuyerProfile'
 import BuyerSignup from './components/auth/BuyerSignup'
 import BuyerLogin from './components/auth/BuyerLogin'
@@ -68,19 +67,10 @@ function App() {
               <ProductDetail />
             </ProtectedRoute>
           } />
-          <Route path="/cart" element={
-            <ProtectedRoute>
-              <CartPage />
-            </ProtectedRoute>
-          } />
-          <Route path="/checkout" element={
-            <ProtectedRoute>
-              <CheckoutPage />
-            </ProtectedRoute>
-          } />
+
           <Route path="/orders" element={
             <ProtectedRoute>
-              <BuyerOrdersPage />
+              <VendorStoresPage />
             </ProtectedRoute>
           } />
           <Route path="/profile" element={

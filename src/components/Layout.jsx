@@ -1,19 +1,14 @@
 import { Link, useLocation } from 'react-router-dom'
-import { FaHome, FaSearch, FaShoppingCart, FaUser, FaBell } from 'react-icons/fa'
+import { FaHome, FaSearch, FaStore, FaUser, FaBell } from 'react-icons/fa'
 import { useState, useEffect } from 'react'
 
 const Layout = ({ children }) => {
   const location = useLocation()
-  const [cartCount, setCartCount] = useState(0)
   const [userName, setUserName] = useState('')
 
   useEffect(() => {
     const name = localStorage.getItem('buyerName') || 'User'
     setUserName(name)
-    
-    // Get cart count from localStorage
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]')
-    setCartCount(cart.length)
   }, [])
 
   const isActive = (path) => location.pathname === path
@@ -26,9 +21,9 @@ const Layout = ({ children }) => {
           <div className="flex items-center justify-between">
             <Link to="/home" className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-                <FaShoppingCart className="w-4 h-4 text-white" />
+                <FaStore className="w-4 h-4 text-white" />
               </div>
-              <span className="text-lg font-bold text-gray-900">VendorTool</span>
+              <span className="text-lg font-bold text-gray-900">Catalog</span>
             </Link>
             
             <div className="flex items-center space-x-3">
@@ -71,24 +66,19 @@ const Layout = ({ children }) => {
           </Link>
           
           <Link 
-            to="/cart" 
-            className={`flex flex-col items-center p-2 relative ${isActive('/cart') ? 'text-green-600' : 'text-gray-400'}`}
-          >
-            <FaShoppingCart className="w-5 h-5 mb-1" />
-            <span className="text-xs">Cart</span>
-            {cartCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                {cartCount}
-              </span>
-            )}
-          </Link>
-          
-          <Link 
             to="/orders" 
             className={`flex flex-col items-center p-2 ${isActive('/orders') ? 'text-green-600' : 'text-gray-400'}`}
           >
+            <FaStore className="w-5 h-5 mb-1" />
+            <span className="text-xs">Stores</span>
+          </Link>
+          
+          <Link 
+            to="/profile" 
+            className={`flex flex-col items-center p-2 ${isActive('/profile') ? 'text-green-600' : 'text-gray-400'}`}
+          >
             <FaUser className="w-5 h-5 mb-1" />
-            <span className="text-xs">Orders</span>
+            <span className="text-xs">Profile</span>
           </Link>
         </div>
       </div>

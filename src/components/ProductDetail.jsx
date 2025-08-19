@@ -31,9 +31,10 @@ const ProductDetail = () => {
     fetchProduct()
   }, [productId])
 
-  const contactVendor = () => {
-    const message = `Hi ${vendor?.businessName}! I want to order ${quantity}x "${product.name}" for ₦${(product.price * quantity)?.toLocaleString()}.`
-    const whatsappUrl = `https://wa.me/${vendor?.phone?.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
+  const orderOnWhatsApp = () => {
+    const message = `Hi, I'm interested in "${product.name}" (₦${product.price?.toLocaleString()}).`
+    const vendorPhone = product.vendor?.phoneNumber || vendor?.phoneNumber
+    const whatsappUrl = `https://wa.me/${vendorPhone?.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
   }
 
@@ -170,28 +171,7 @@ const ProductDetail = () => {
           </div>
         )}
 
-        {/* Quantity Selector */}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">Quantity</h3>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center border border-gray-200 rounded-xl">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-12 h-12 flex items-center justify-center text-gray-600 hover:bg-gray-50 rounded-l-xl"
-              >
-                -
-              </button>
-              <span className="w-16 text-center font-semibold">{quantity}</span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="w-12 h-12 flex items-center justify-center text-gray-600 hover:bg-gray-50 rounded-r-xl"
-              >
-                +
-              </button>
-            </div>
-            <span className="text-sm text-gray-600">Total: ₦{(product.price * quantity)?.toLocaleString()}</span>
-          </div>
-        </div>
+
 
         {/* Vendor Card */}
         {vendor && (
@@ -220,24 +200,15 @@ const ProductDetail = () => {
         )}
       </div>
 
-      {/* Sticky Bottom Actions */}
+      {/* Sticky Bottom Action */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-2xl">
-        <div className="flex space-x-3">
-          <button
-            onClick={addToCart}
-            className="flex-1 bg-gray-900 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-2 hover:bg-gray-800 transition-colors"
-          >
-            <FaShoppingCart className="w-5 h-5" />
-            <span>Add to Cart</span>
-          </button>
-          <button
-            onClick={contactVendor}
-            className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-2 hover:shadow-lg transform hover:scale-105 transition-all"
-          >
-            <FaWhatsapp className="w-5 h-5" />
-            <span>Order Now</span>
-          </button>
-        </div>
+        <button
+          onClick={orderOnWhatsApp}
+          className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-2xl font-bold flex items-center justify-center space-x-2 hover:shadow-lg transform hover:scale-105 transition-all"
+        >
+          <FaWhatsapp className="w-6 h-6" />
+          <span>Order on WhatsApp</span>
+        </button>
       </div>
 
       {/* Bottom padding */}

@@ -42,7 +42,7 @@ const LandingPage = () => {
             <div className="w-10 h-10 bg-[#25D366] rounded-xl flex items-center justify-center">
               <FaShoppingCart className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-xl font-bold text-gray-900">VendorTool</h1>
+            <h1 className="text-xl font-bold text-gray-900">Catalog</h1>
           </div>
           <button
             onClick={() => navigate('/login')}
@@ -57,12 +57,12 @@ const LandingPage = () => {
       <div className="max-w-6xl mx-auto px-4 py-16">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Shop Local,
-            <span className="text-[#25D366]"> Shop Smart</span>
+            Browse Products,
+            <span className="text-[#25D366]"> Order on WhatsApp</span>
           </h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Discover amazing products from local vendors in your area. Chat directly via WhatsApp, 
-            support your community, and get the best deals on quality items.
+            Discover amazing products from local vendors. Browse catalogs, find what you love, 
+            then order directly via WhatsApp for a personal shopping experience.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
@@ -101,7 +101,7 @@ const LandingPage = () => {
         {/* Features */}
         <div className="mb-16">
           <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Why Choose VendorTool?
+            Why Use Our Catalog?
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature) => {
@@ -129,22 +129,22 @@ const LandingPage = () => {
               <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-600">1</span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Browse & Discover</h4>
-              <p className="text-gray-600">Explore products from local vendors in your area using our easy-to-use interface</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Browse Catalogs</h4>
+              <p className="text-gray-600">Explore beautiful product catalogs from verified vendors with detailed photos and descriptions</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-green-600">2</span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Chat & Connect</h4>
-              <p className="text-gray-600">Contact vendors directly via WhatsApp to discuss products, prices, and delivery</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Order on WhatsApp</h4>
+              <p className="text-gray-600">Click "Order on WhatsApp" to chat directly with vendors about availability, sizes, and delivery</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-purple-600">3</span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Buy & Enjoy</h4>
-              <p className="text-gray-600">Complete your purchase and enjoy quality products delivered to your doorstep</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">Complete Purchase</h4>
+              <p className="text-gray-600">Vendors handle payment and delivery directly - cash, transfer, or whatever works for you</p>
             </div>
           </div>
         </div>
@@ -174,10 +174,10 @@ const LandingPage = () => {
             <div className="w-8 h-8 bg-[#25D366] rounded-lg flex items-center justify-center">
               <FaShoppingCart className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold">VendorTool</span>
+            <span className="text-lg font-bold">Catalog</span>
           </div>
           <p className="text-gray-400">
-            Connecting communities through local commerce
+            Your gateway to local vendor catalogs
           </p>
         </div>
       </div>
