@@ -29,7 +29,7 @@ const VendorStoresPage = () => {
 
   const contactVendor = (vendor) => {
     const message = `Hi ${vendor.businessName}! I found your store and would like to know more about your products.`
-    const whatsappUrl = `https://wa.me/${vendor.phoneNumber?.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
+    const whatsappUrl = `https://wa.me/${vendor.phone?.replace(/\D/g, '')}?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')
   }
 
