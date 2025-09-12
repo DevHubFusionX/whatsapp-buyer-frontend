@@ -70,9 +70,32 @@ const BuyerLogin = () => {
             <FaStar className="w-10 h-10 text-white" />
           </div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-2">
-            Welcome Back
+            Welcome Back! 👋
           </h1>
-          <p className="text-gray-600">Sign in to continue shopping</p>
+          <p className="text-gray-600 mb-4">Sign in to continue shopping and track your orders</p>
+          
+          {/* Benefits of Signing In */}
+          <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl p-4 border border-green-200/50">
+            <h3 className="font-semibold text-gray-900 mb-2 text-sm">✨ Benefits of having an account:</h3>
+            <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
+              <div className="flex items-center space-x-1">
+                <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                <span>Save favorites</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
+                <span>Track orders</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <span className="w-1.5 h-1.5 bg-purple-500 rounded-full"></span>
+                <span>Order history</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <span className="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
+                <span>Quick reorder</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
@@ -156,7 +179,7 @@ const BuyerLogin = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-2xl font-bold hover:from-green-600 hover:to-green-700 transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none"
+              className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-2xl font-bold hover:opacity-90 transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none"
             >
               {loading ? (
                 <div className="flex items-center justify-center space-x-2">
@@ -170,12 +193,22 @@ const BuyerLogin = () => {
           </form>
 
           <div className="text-center mt-6 pt-6 border-t border-gray-200">
-            <p className="text-gray-600">
+            <p className="text-gray-600 mb-4">
               Don't have an account?{' '}
               <Link to="/signup" className="text-green-600 font-semibold hover:text-green-700">
                 Create Account
               </Link>
             </p>
+            
+            <div className="bg-gray-50 rounded-2xl p-4">
+              <p className="text-sm text-gray-600 mb-2">💡 <strong>Remember:</strong> You can shop without an account!</p>
+              <Link 
+                to="/home" 
+                className="text-green-600 hover:text-green-700 font-medium text-sm"
+              >
+                Continue browsing without signing in →
+              </Link>
+            </div>
           </div>
         </div>
       </div>

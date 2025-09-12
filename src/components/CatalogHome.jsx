@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { MessageCircle, Phone, Share2, Package, Search, Grid, List } from 'lucide-react'
+import { MessageCircle, Phone, Share2, Package, Search, Grid, List, HelpCircle } from 'lucide-react'
 import { vendorsAPI } from '../services/api'
 import { trackProductView } from '../services/tracking'
 import ProductCard from './catalog/ProductCard'
 import FloatingCart from './cart/FloatingCart'
+import WhatsAppHelper from './ui/WhatsAppHelper'
 
 const CatalogHome = () => {
   const { vendorId } = useParams()
@@ -15,6 +16,15 @@ const CatalogHome = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [cartItems, setCartItems] = useState([])
+  const [showWhatsAppHelper, setShowWhatsAppHelper] = useState(false)
+
+  useEffect(() => {
+    const hasSeenHelper = localStorage.getItem('hasSeenWhatsAppHelper')
+    if (!hasSeenHelper && vendor) {
+      setShowWhatsAppHelper(true)
+      localStorage.setItem('hasSeenWhatsAppHelper', 'true')
+    }
+  }, [vendor])
 
   useEffect(() => {
     const fetchCatalog = async () => {
@@ -141,7 +151,7 @@ const CatalogHome = () => {
           <div className="grid grid-cols-2 gap-3 mb-4">
             <button
               onClick={handleContactVendor}
-              className="bg-green-500 text-white px-4 py-3 rounded-xl font-medium flex items-center justify-center space-x-2 hover:bg-green-600 transition-colors"
+              className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-3 rounded-xl font-medium flex items-center justify-center space-x-2 hover:opacity-90 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               <MessageCircle className="w-5 h-5" />
               <span>Chat on WhatsApp</span>
@@ -149,12 +159,28 @@ const CatalogHome = () => {
             <button
               onClick={() => {
                 const catalogUrl = `https://whatsapp-buyer-frontend.vercel.app/catalog/${vendor.catalogId}`
-                navigator.share ? navigator.share({ url: catalogUrl }) : navigator.clipboard.writeText(catalogUrl)
+                if (navigator.share) {
+                  navigator.share({ url: catalogUrl, title: `${vendor.businessName} - Product Catalog` })
+                } else {
+                  navigator.clipboard.writeText(catalogUrl)
+                  alert('Store link copied to clipboard!')
+                }
               }}
-              className="border border-green-500 text-green-600 px-4 py-3 rounded-xl font-medium flex items-center justify-center space-x-2 hover:bg-green-50 transition-colors"
+              className="border-2 border-green-500 text-green-600 px-4 py-3 rounded-xl font-medium flex items-center justify-center space-x-2 hover:bg-green-50 transition-all hover:scale-105"
             >
               <Share2 className="w-5 h-5" />
               <span>Share Store</span>
+            </button>
+          </div>
+          
+          {/* Help Button */}
+          <div className="flex justify-end mb-4">
+            <button
+              onClick={() => setShowWhatsAppHelper(true)}
+              className="flex items-center space-x-2 px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors text-sm"
+            >
+              <HelpCircle className="w-4 h-4" />
+              <span>How to Order</span>
             </button>
           </div>
 
@@ -191,12 +217,37 @@ const CatalogHome = () => {
         </div>
       </div>
 
+      {/* WhatsApp Helper */}
+      {showWhatsAppHelper && (
+        <div className="p-4">
+          <WhatsAppHelper 
+            vendor={vendor} 
+            className="mb-4"
+          />
+          <button
+            onClick={() => setShowWhatsAppHelper(false)}
+            className="w-full text-center text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            Hide Helper
+          </button>
+        </div>
+      )}
+      
       {/* Products */}
       <div className="p-4">
         {filteredProducts.length === 0 ? (
           <div className="text-center py-16">
             <Package className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500">No products found</p>
+            <h3 className="text-lg font-semibold text-gray-700 mb-2">No products found</h3>
+            <p className="text-gray-500 mb-4">
+              {searchQuery ? `No products match "${searchQuery}"` : 'This store has no products yet'}
+            </p>
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="text-green-600 hover:text-green-700 font-medium"
+              >Clear search</button>
+            )}
           </div>
         ) : viewMode === 'grid' ? (
           <div className="grid grid-cols-2 gap-4">
@@ -235,7 +286,7 @@ const CatalogHome = () => {
       {cartItems.length === 0 && (
         <button
           onClick={handleContactVendor}
-          className="fixed bottom-6 right-6 w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition-colors z-50"
+          className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-full flex items-center justify-center shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 z-50"
         >
           <MessageCircle className="w-6 h-6" />
         </button>

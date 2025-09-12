@@ -60,10 +60,26 @@ const LandingPage = () => {
             Browse Products,
             <span className="text-[#25D366]"> Order Instantly</span>
           </h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 mb-4 max-w-2xl mx-auto">
             No signup required! Browse thousands of products from local vendors, 
             then order directly via WhatsApp. Simple, fast, and personal.
           </p>
+          
+          {/* Trust Indicators */}
+          <div className="flex items-center justify-center space-x-6 mb-8 text-sm text-gray-600">
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span>No Registration Required</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <span>Direct WhatsApp Contact</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+              <span>Local Vendors Only</span>
+            </div>
+          </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => navigate('/home')}
@@ -121,30 +137,56 @@ const LandingPage = () => {
 
         {/* How it Works */}
         <div className="bg-white rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100">
-          <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
+          <h3 className="text-3xl font-bold text-center text-gray-900 mb-4">
             How It Works
           </h3>
+          <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+            Shopping with us is as easy as 1-2-3! No complicated processes, just simple steps to get what you need.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <span className="text-2xl font-bold text-blue-600">1</span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Browse Freely</h4>
-              <p className="text-gray-600">No signup required! Explore thousands of products from local vendors instantly</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">🔍 Browse Freely</h4>
+              <p className="text-gray-600">No signup required! Explore thousands of products from local vendors instantly. Use search and filters to find exactly what you need.</p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <span className="text-2xl font-bold text-green-600">2</span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Order on WhatsApp</h4>
-              <p className="text-gray-600">Click "Order on WhatsApp" to chat directly with vendors about availability, sizes, and delivery</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">💬 Order on WhatsApp</h4>
+              <p className="text-gray-600">Click "Order on WhatsApp" to chat directly with vendors. Ask about availability, sizes, colors, and delivery options.</p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="text-center group">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <span className="text-2xl font-bold text-purple-600">3</span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Complete Purchase</h4>
-              <p className="text-gray-600">Vendors handle payment and delivery directly - cash, transfer, or whatever works for you</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">✅ Complete Purchase</h4>
+              <p className="text-gray-600">Agree on payment method and delivery details with the vendor. They handle everything directly - simple and secure!</p>
+            </div>
+          </div>
+          
+          {/* Additional Tips */}
+          <div className="mt-12 p-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl border border-green-200/50">
+            <h4 className="font-semibold text-gray-900 mb-3 text-center">💡 Pro Shopping Tips</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+              <div className="flex items-center space-x-2">
+                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                <span>Always ask about product condition and authenticity</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+                <span>Confirm delivery fees and timeline before ordering</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+                <span>Save vendor contacts for future purchases</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
+                <span>Most vendors are active 9 AM - 6 PM</span>
+              </div>
             </div>
           </div>
         </div>

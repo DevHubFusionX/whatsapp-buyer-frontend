@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
-import { FaSearch, FaStar, FaShoppingBag, FaHeart, FaFire, FaTag } from 'react-icons/fa'
+import { FaSearch, FaStar, FaShoppingBag, FaHeart, FaFire, FaTag, FaQuestionCircle } from 'react-icons/fa'
 import { MdFastfood, MdCheckroom, MdPhoneIphone, MdHome } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { buyerAPI } from '../services/api'
 import Layout from './Layout'
 import GuestPrompt from './GuestPrompt'
 import { HomePageSkeleton } from './ui/LoadingSkeleton'
+import ShoppingGuide from './ui/ShoppingGuide'
+import ProductTips from './ui/ProductTips'
 
 const HomePage = () => {
   const [featuredProducts, setFeaturedProducts] = useState([])
@@ -13,6 +15,20 @@ const HomePage = () => {
   const [categories, setCategories] = useState([])
   const [loading, setLoading] = useState(true)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [showGuide, setShowGuide] = useState(false)
+  const [showTips, setShowTips] = useState(true)
+
+  useEffect(() => {
+    const hasSeenGuide = localStorage.getItem('hasSeenShoppingGuide')
+    if (!hasSeenGuide) {
+      setShowGuide(true)
+    }
+  }, [])
+
+  const handleGuideComplete = () => {
+    setShowGuide(false)
+    localStorage.setItem('hasSeenShoppingGuide', 'true')
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('buyerToken')
@@ -59,6 +75,20 @@ const HomePage = () => {
         {/* Guest Prompt */}
         {!isLoggedIn && <GuestPrompt />}
         
+        {/* Shopping Tips */}
+        <ProductTips isVisible={showTips} onClose={() => setShowTips(false)} />
+        
+        {/* Help Button */}
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={() => setShowGuide(true)}
+            className="flex items-center space-x-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-xl hover:bg-blue-200 transition-colors text-sm font-medium"
+          >
+            <FaQuestionCircle className="w-4 h-4" />
+            <span>How to Shop</span>
+          </button>
+        </div>
+        
         {/* Search Bar */}
         <Link to="/search" className="block">
           <div className="relative">
@@ -103,7 +133,7 @@ const HomePage = () => {
               <span className="text-sm font-medium">Hot Deals</span>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {featuredProducts.map((product) => (
               <Link key={product._id} to={`/product/${product._id}`} className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow">
                 <div className="aspect-square bg-gray-100 flex items-center justify-center relative">
@@ -156,17 +186,17 @@ const HomePage = () => {
                       )}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">{vendor.businessName}</h3>
+                      <h3 className="font-semibold text-gray-900">{vendor.businessName || vendor.name}</h3>
                       <div className="flex items-center space-x-2">
                         <FaStar className="w-4 h-4 text-yellow-400" />
                         <span className="text-sm text-gray-600">{vendor.rating || 4.8}</span>
                         <span className="text-sm text-gray-400">•</span>
-                        <span className="text-sm text-gray-600">{vendor.productCount || 25} products</span>
+                        <span className="text-sm text-gray-600">{vendor.products?.length || vendor.productCount || 25} products</span>
                       </div>
                     </div>
                   </div>
                   <Link
-                    to={`/store/${vendor._id}`}
+                    to={`/store/${vendor._id || vendor.catalogId}`}
                     className="bg-green-500 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-green-600 transition-colors"
                   >
                     Visit Store
@@ -176,6 +206,9 @@ const HomePage = () => {
             ))}
           </div>
         </div>
+        
+        {/* Shopping Guide Modal */}
+        <ShoppingGuide isOpen={showGuide} onClose={handleGuideComplete} />
       </div>
     </Layout>
   )
