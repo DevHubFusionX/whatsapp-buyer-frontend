@@ -8,6 +8,7 @@ import GuestPrompt from './GuestPrompt'
 import { HomePageSkeleton } from './ui/LoadingSkeleton'
 import ShoppingGuide from './ui/ShoppingGuide'
 import ProductTips from './ui/ProductTips'
+import ValueProposition from './ui/ValueProposition'
 
 const HomePage = () => {
   const [featuredProducts, setFeaturedProducts] = useState([])
@@ -170,9 +171,12 @@ const HomePage = () => {
           </div>
         </div>
 
+        {/* Value Proposition */}
+        <ValueProposition />
+        
         {/* Featured Vendors */}
         <div>
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Popular Stores</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-4">Featured Professional Stores</h2>
           <div className="space-y-3">
             {featuredVendors.map((vendor) => (
               <div key={vendor._id} className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow border border-gray-100">
@@ -193,6 +197,7 @@ const HomePage = () => {
                         <span className="text-sm text-gray-400">•</span>
                         <span className="text-sm text-gray-600">{vendor.products?.length || vendor.productCount || 25} products</span>
                       </div>
+                      <p className="text-xs text-green-600 mt-1">✓ Professional storefront</p>
                     </div>
                   </div>
                   <Link

@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
               <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
                 <FaStore className="w-4 h-4 text-white" />
               </div>
-              <span className="text-lg font-bold text-gray-900">Catalog</span>
+              <span className="text-lg font-bold text-gray-900">Vendly</span>
             </Link>
             
             <div className="flex items-center space-x-3">

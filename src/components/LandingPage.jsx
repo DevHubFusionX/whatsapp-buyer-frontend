@@ -42,7 +42,7 @@ const LandingPage = () => {
             <div className="w-10 h-10 bg-[#25D366] rounded-xl flex items-center justify-center">
               <FaShoppingCart className="w-6 h-6 text-white" />
             </div>
-            <h1 className="text-xl font-bold text-gray-900">Catalog</h1>
+            <h1 className="text-xl font-bold text-gray-900">Vendly</h1>
           </div>
           <button
             onClick={() => navigate('/login')}
@@ -117,7 +117,7 @@ const LandingPage = () => {
         {/* Features */}
         <div className="mb-16">
           <h3 className="text-3xl font-bold text-center text-gray-900 mb-12">
-            Why Use Our Catalog?
+            Why Shop With Vendly?
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature) => {
@@ -148,44 +148,44 @@ const LandingPage = () => {
               <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <span className="text-2xl font-bold text-blue-600">1</span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">🔍 Browse Freely</h4>
-              <p className="text-gray-600">No signup required! Explore thousands of products from local vendors instantly. Use search and filters to find exactly what you need.</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">🔍 Discover Professional Stores</h4>
+              <p className="text-gray-600">Browse organized, beautiful storefronts instead of scrolling through chaotic WhatsApp chats. Find exactly what you need with proper categories and search.</p>
             </div>
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <span className="text-2xl font-bold text-green-600">2</span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">💬 Order on WhatsApp</h4>
-              <p className="text-gray-600">Click "Order on WhatsApp" to chat directly with vendors. Ask about availability, sizes, colors, and delivery options.</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">💬 Send Clear Orders</h4>
+              <p className="text-gray-600">No more confusion! Your WhatsApp message includes product name, price, and details. Vendors get organized orders instead of endless questions.</p>
             </div>
             <div className="text-center group">
               <div className="w-16 h-16 bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                 <span className="text-2xl font-bold text-purple-600">3</span>
               </div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">✅ Complete Purchase</h4>
-              <p className="text-gray-600">Agree on payment method and delivery details with the vendor. They handle everything directly - simple and secure!</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">✅ Enjoy Personal Service</h4>
+              <p className="text-gray-600">Get the personal touch of WhatsApp communication with the professionalism of a real store. Best of both worlds!</p>
             </div>
           </div>
           
           {/* Additional Tips */}
           <div className="mt-12 p-6 bg-gradient-to-r from-green-50 to-blue-50 rounded-2xl border border-green-200/50">
-            <h4 className="font-semibold text-gray-900 mb-3 text-center">💡 Pro Shopping Tips</h4>
+            <h4 className="font-semibold text-gray-900 mb-3 text-center">💡 The Vendly Advantage</h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
               <div className="flex items-center space-x-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                <span>Always ask about product condition and authenticity</span>
+                <span>Professional product photos and descriptions</span>
               </div>
               <div className="flex items-center space-x-2">
                 <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
-                <span>Confirm delivery fees and timeline before ordering</span>
+                <span>Pre-organized order messages save time</span>
               </div>
               <div className="flex items-center space-x-2">
                 <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
-                <span>Save vendor contacts for future purchases</span>
+                <span>Discover new vendors through our platform</span>
               </div>
               <div className="flex items-center space-x-2">
                 <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                <span>Most vendors are active 9 AM - 6 PM</span>
+                <span>No middleman - direct vendor communication</span>
               </div>
             </div>
           </div>
@@ -194,10 +194,10 @@ const LandingPage = () => {
         {/* CTA Section */}
         <div className="text-center mt-16">
           <h3 className="text-3xl font-bold text-gray-900 mb-4">
-            Start Browsing Now!
+            Experience Professional Shopping!
           </h3>
           <p className="text-xl text-gray-600 mb-8">
-            No registration needed. Browse products and order via WhatsApp instantly.
+            Discover organized storefronts from local vendors. Professional catalogs meet WhatsApp convenience.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
@@ -224,7 +224,7 @@ const LandingPage = () => {
             <div className="w-8 h-8 bg-[#25D366] rounded-lg flex items-center justify-center">
               <FaShoppingCart className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold">Catalog</span>
+            <span className="text-lg font-bold">Vendly</span>
           </div>
           <p className="text-gray-400">
             Your gateway to local vendor catalogs
