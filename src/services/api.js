@@ -40,7 +40,8 @@ api.interceptors.response.use(
 )
 
 export const vendorsAPI = {
-  getVendorCatalog: (catalogId) => api.get(`/vendors/${catalogId}`)
+  getVendorCatalog: (catalogId) => api.get(`/vendors/${catalogId}`),
+  getVendorById: (vendorId) => api.get(`/buyer/vendors/${vendorId}`)
 };
 
 export const buyerAPI = {

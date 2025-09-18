@@ -30,13 +30,13 @@ const VendorStorePage = () => {
   useEffect(() => {
     const fetchVendorData = async () => {
       try {
-        // First get vendor info by catalogId
-        const vendorRes = await vendorsAPI.getVendorCatalog(vendorId)
-        const vendorInfo = vendorRes.data.vendor
+        // Get vendor info by vendor ID
+        const vendorRes = await vendorsAPI.getVendorById(vendorId)
+        const vendorInfo = vendorRes.data
         setVendor(vendorInfo)
         
         // Then get products for this vendor
-        const productsRes = await buyerAPI.getProducts({ vendor: vendorInfo.id })
+        const productsRes = await buyerAPI.getProducts({ vendor: vendorId })
         setProducts(productsRes.data)
         setFilteredProducts(productsRes.data)
       } catch (error) {
