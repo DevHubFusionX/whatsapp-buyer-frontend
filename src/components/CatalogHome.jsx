@@ -158,7 +158,7 @@ const CatalogHome = () => {
             </button>
             <button
               onClick={() => {
-                const catalogUrl = `https://whatsapp-buyer-frontend.vercel.app/catalog/${vendor.catalogId}`
+                const catalogUrl = `https://vendly-buyer.vercel.app/store/${vendor._id}`
                 if (navigator.share) {
                   navigator.share({ url: catalogUrl, title: `${vendor.businessName} - Product Catalog` })
                 } else {
