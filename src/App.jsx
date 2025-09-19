@@ -15,35 +15,18 @@ import ForgotPassword from './components/auth/ForgotPassword'
 import NotFound from './components/NotFound'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 
-const AuthenticatedLandingPage = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null)
 
-  useEffect(() => {
-    const token = localStorage.getItem('buyerToken')
-    setIsAuthenticated(!!token)
-  }, [])
-
-  if (isAuthenticated === null) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 flex items-center justify-center">
-        <div className="w-8 h-8 border-2 border-green-500 border-t-transparent rounded-full animate-spin"></div>
-      </div>
-    )
-  }
-
-  return isAuthenticated ? <Navigate to="/home" replace /> : <LandingPage />
-}
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
         <Routes>
-          <Route path="/" element={<AuthenticatedLandingPage />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/signup" element={<BuyerSignup />} />
           <Route path="/login" element={<BuyerLogin />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/home" element={<HomePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/store/:vendorId" element={<VendorStorePage />} />
           <Route path="/catalog/:catalogId" element={<ModernCatalogHome />} />

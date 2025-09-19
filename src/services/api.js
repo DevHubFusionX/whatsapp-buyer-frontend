@@ -26,6 +26,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    console.log('API Error:', error.response?.status, error.response?.data)
     if (error.response?.status === 401) {
       // Clear invalid token
       localStorage.removeItem('buyerToken')
@@ -41,7 +42,13 @@ api.interceptors.response.use(
 
 export const vendorsAPI = {
   getVendorCatalog: (catalogId) => api.get(`/vendors/${catalogId}`),
-  getVendorById: (vendorId) => api.get(`/buyer/vendors/${vendorId}`)
+  getVendorById: (vendorId) => api.get(`/buyer/vendors/${vendorId}`),
+  login: (credentials) => api.post('/auth/vendor/login', credentials),
+  signup: (userData) => api.post('/auth/vendor/register', userData),
+  verifyOTP: (data) => api.post('/auth/vendor/verify-otp', data),
+  forgotPassword: (data) => api.post('/auth/vendor/forgot-password', data),
+  verifyResetOTP: (data) => api.post('/auth/vendor/verify-reset-otp', data),
+  resetPassword: (data) => api.post('/auth/vendor/reset-password', data)
 };
 
 export const buyerAPI = {
@@ -53,14 +60,14 @@ export const buyerAPI = {
   trackOrder: (trackingData) => api.post('/buyer/track-order', trackingData),
   trackInterest: (data) => api.post('/buyer/track-interest', data),
   signup: (userData) => api.post('/auth/buyer/signup', userData),
-  login: (credentials) => api.post('/auth/login', credentials),
+  login: (credentials) => api.post('/auth/buyer/login', credentials),
   getProfile: () => api.get('/buyer/profile'),
   updateProfile: (profileData) => api.put('/buyer/profile', profileData),
   logInteraction: (interactionData) => api.post('/buyer/interactions', interactionData),
   checkAuth: () => api.get('/buyer/auth-check'),
-  forgotPassword: (data) => api.post('/auth/forgot-password', data),
-  verifyOTP: (data) => api.post('/auth/verify-reset-otp', data),
-  resetPassword: (data) => api.post('/auth/reset-password', data)
+  forgotPassword: (data) => api.post('/auth/buyer/forgot-password', data),
+  verifyOTP: (data) => api.post('/auth/buyer/verify-reset-otp', data),
+  resetPassword: (data) => api.post('/auth/buyer/reset-password', data)
 };
 
 export default api;
