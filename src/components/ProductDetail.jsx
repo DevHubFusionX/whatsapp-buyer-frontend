@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { FaStar, FaHeart, FaArrowLeft, FaWhatsapp, FaStore, FaShoppingCart, FaShare, FaTruck, FaPhone, FaQuestionCircle, FaInfoCircle } from 'react-icons/fa'
 import { MessageCircle, Phone, Share2, Heart, ShoppingBag, Truck, Shield, Clock, Star, ChevronLeft, ChevronRight, Zap, Award, Users, HelpCircle, Info, CheckCircle, AlertCircle } from 'lucide-react'
 import { buyerAPI } from '../services/api'
-import { shareProduct } from '../utils/share'
+import SocialShare from './ui/SocialShare'
 import GuestPrompt from './GuestPrompt'
 import WhatsAppHelper from './ui/WhatsAppHelper'
 
@@ -71,12 +71,7 @@ const ProductDetail = () => {
     navigate('/cart')
   }
 
-  const handleShareProduct = async () => {
-    const result = await shareProduct(product)
-    if (result.success && result.method === 'clipboard') {
-      alert('Product link copied to clipboard!')
-    }
-  }
+
 
   if (loading) {
     return (
@@ -97,7 +92,7 @@ const ProductDetail = () => {
   const images = product.images || [product.image].filter(Boolean)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
+    <div className=" relative bg-gradient-to-br from-gray-50 via-white to-blue-50">
       {/* Enhanced Floating Header */}
       <div className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between p-3 sm:p-4 bg-white/95 backdrop-blur-xl border-b border-gray-200/50 shadow-sm">
         <button 
@@ -107,12 +102,12 @@ const ProductDetail = () => {
           <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
         </button>
         <div className="flex items-center space-x-2 sm:space-x-3">
-          <button 
-            onClick={handleShareProduct} 
-            className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl sm:rounded-2xl shadow-lg flex items-center justify-center hover:shadow-xl transition-all transform hover:scale-105 active:scale-95"
-          >
-            <Share2 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
-          </button>
+          
+            <SocialShare 
+              product={product} 
+              productUrl={`${window.location.origin}/product/${product._id}`}
+            />
+          
           <button 
             onClick={() => setIsSaved(!isSaved)} 
             className="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl sm:rounded-2xl shadow-lg flex items-center justify-center hover:shadow-xl transition-all transform hover:scale-105 active:scale-95"
@@ -123,7 +118,7 @@ const ProductDetail = () => {
       </div>
 
       {/* Enhanced Product Images */}
-      <div className="pt-16 sm:pt-20 px-3 sm:px-4">
+      <div className="pt-20 sm:pt-24 px-3 sm:px-4">
         <div className="max-w-sm sm:max-w-md mx-auto aspect-square bg-gradient-to-br from-gray-100 via-white to-gray-100 relative overflow-hidden rounded-xl sm:rounded-2xl shadow-lg">
           {images.length > 0 ? (
             <>
@@ -140,8 +135,12 @@ const ProductDetail = () => {
               />
             </>
           ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <ShoppingBag className="w-16 h-16 sm:w-24 sm:h-24 text-gray-300" />
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100">
+              <div className="w-20 h-20 sm:w-28 sm:h-28 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center mb-4 shadow-lg">
+                <ShoppingBag className="w-10 h-10 sm:w-14 sm:h-14 text-blue-400" />
+              </div>
+              <p className="text-sm text-gray-500 font-medium">No image available</p>
+              <p className="text-xs text-gray-400 mt-1">Product details below</p>
             </div>
           )}
           

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import LoadingSplash from './components/ui/LoadingSplash'
 import LandingPage from './components/LandingPage'
 import HomePage from './components/HomePage'
 import ProductDetail from './components/ProductDetail'
@@ -18,6 +19,12 @@ import ProtectedRoute from './components/auth/ProtectedRoute'
 
 
 function App() {
+  const [showSplash, setShowSplash] = useState(true)
+
+  if (showSplash) {
+    return <LoadingSplash onComplete={() => setShowSplash(false)} />
+  }
+
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
